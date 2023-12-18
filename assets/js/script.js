@@ -24,41 +24,59 @@ document.addEventListener('DOMContentLoaded', () => {
     function formCreation() {
         document.querySelector('main .container .row form').innerHTML =
             `<div class="mb-3">
-                        <label for="InputName" class="form-label">Name</label>
+                        <p class='errorInput text-danger'></p>
+                        <label for="InputName" class="form-label">Name</label>                        
                         <input type="text" class="form-control inputForm">
                     </div>
                     <div class="mb-3">
+                        <p class='errorInput text-danger'></p>
                         <label for="InputDescription" class="form-label">Description</label>
                         <input type="text" class="form-control inputForm">
                     </div>
                     <div class="mb-3">
+                        <p class='errorInput text-danger'></p>
                         <label for="InputBrand" class="form-label">Brand</label>
                         <input type="text" class="form-control inputForm">
                     </div>
                     <div class="mb-3">
+                        <p class='errorInput text-danger'></p>
                         <label for="InputImageUrl" class="form-label">Image Url</label>
                         <input type="text" class="form-control inputForm">
                     </div>
                     <div class="mb-3">
+                        <p class='errorInput text-danger'></p>
                         <label for="InputPrice" class="form-label">Price</label>
                         <input type="number" class="form-control inputForm">
                     </div>
                     <div class="mb-3 form-check">
+                        <p class='errorCheckbox text-danger'></p>
                         <input type="checkbox" class="form-check-input">
                         <label class="form-check-label" for="exampleCheck1">Check me out if you are sure to Submit</label>
                     </div>
-                    <button type="submit" class="btn btn-primary" id="btnChanges">Submit</button>`
+                    <button type="button" class="btn btn-primary" id="btnChanges">Submit</button>`
     };
 
     formCreation();
-    
+    function formValidation(){
+        for (let i=0; i<document.querySelectorAll('.inputForm').length; i++){
+            if(document.querySelectorAll('.inputForm')[i].value > 1 || document.querySelectorAll('.inputForm')[i].value.trim().length > 1){
+                console.log('Bravo, hai inserito i dati giusti')
+                document.querySelectorAll('.errorInput')[i].innerHTML = null;
+            }
+            else if(document.querySelector('.form-check-label')[i].checked === false ){
+                
+                document.querySelectorAll('.Checkbox')[i].innerHTML = ('Devi accettare le condizioni')
+            }
+            else{                
+                console.log (('Devi cambiare il valore inserito in ') + (document.querySelectorAll('.form-label')[i].textContent) + (' : ') + (document.querySelectorAll('.inputForm')[i].value) + (' perchè il valore inserito è troppo piccolo '))
+                document.querySelectorAll('.errorInput')[i].innerHTML = ('Devi cambiare il valore inserito in ') + (document.querySelectorAll('.form-label')[i].textContent) + (' : ') + (document.querySelectorAll('.inputForm')[i].value) + (' perchè il valore inserito è troppo piccolo ')
+            }
+        }
+    }
+
     document.querySelector('#btnChanges').addEventListener('click', (e) =>{
-        let p = (document.querySelectorAll('.inputForm'))
-        e.preventDefault()
-        console.log(p)
-        for (let i=0; i<p.length; i++){
-            console.log(p[i].value)
-        }        
+        formValidation()
+        e.preventDefault() /* Inibisce nel tasto submit l'azine di default */     
     });
 
     function pullSomething() {
